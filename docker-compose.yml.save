@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  angular-app:
+    build:
+      context: ./angular-10-client/
+      dockerfile: Dockerfile
+    container_name: angular-app
+    ports:
+      - "80:4200"  # Map host port 4200 to container port 80
+
+  nodejs-app:    build:
+      context: ./node-js-server/
+      dockerfile: Dockerfile
+    container_name: nodejs-app
+    ports:
+      - "8000:8000"  # Map host port 4200 to container port 80
+
+  database-app:
+
+    image: mysql
+    container_name: database
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3307:3306"  # Map host port 4200 to container port 80    

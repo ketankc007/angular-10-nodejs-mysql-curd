@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: testdb
+    ports:
+      - '3306:3306'
+    networks:
+      - my-network  
+
+  nodejs:
+    build: ./node-js-server
+    depends_on:
+      - mysql
+    # environment:
+    #   MYSQL_HOST: mysql
+    #   MYSQL_DATABASE: testdb
+    #   MYSQL_USER: root
+    #   MYSQL_PASSWORD: 1234
+    ports:
+      - '8000:8000'
+    networks:
+      - my-network 
+  angular:
+    build: ./angular-10-client
+    depends_on:
+      - nodejs
+    ports:
+      - '4200:4200'
+    networks:
+      - my-network  
+
+# volumes:
+#   mysql_data:
+
+networks:
+  my-network:   
